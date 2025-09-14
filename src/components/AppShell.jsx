@@ -1,16 +1,19 @@
 import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { 
-  Menu, 
-  X, 
-  Home, 
-  Brain, 
-  Target, 
-  FileCode, 
+import {
+  Menu,
+  X,
+  Home,
+  Brain,
+  Target,
+  FileCode,
   Zap,
   Settings,
-  User
+  User,
+  Moon,
+  Sun
 } from 'lucide-react'
+import { useTheme } from '../context/ThemeContext'
 
 const navigation = [
   { name: 'Dashboard', href: '/', icon: Home },
@@ -23,12 +26,13 @@ const navigation = [
 export function AppShell({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const location = useLocation()
+  const { theme, toggleTheme } = useTheme()
 
   return (
     <div className="flex h-screen bg-background">
       {/* Mobile sidebar */}
       <div className={`fixed inset-0 z-50 lg:hidden ${sidebarOpen ? 'block' : 'hidden'}`}>
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-75" onClick={() => setSidebarOpen(false)} />
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-75 dark:bg-gray-900 dark:bg-opacity-75" onClick={() => setSidebarOpen(false)} />
         <div className="fixed inset-y-0 left-0 flex w-64 flex-col bg-surface shadow-xl">
           <SidebarContent location={location} onClose={() => setSidebarOpen(false)} />
         </div>
@@ -36,7 +40,7 @@ export function AppShell({ children }) {
 
       {/* Desktop sidebar */}
       <div className="hidden lg:flex lg:w-64 lg:flex-col">
-        <div className="flex flex-col flex-grow bg-surface border-r">
+        <div className="flex flex-col flex-grow bg-surface border-r border-gray-200 dark:border-gray-700">
           <SidebarContent location={location} />
         </div>
       </div>
@@ -44,7 +48,7 @@ export function AppShell({ children }) {
       {/* Main content */}
       <div className="flex flex-1 flex-col overflow-hidden">
         {/* Top navigation */}
-        <header className="bg-surface border-b px-4 py-3 lg:px-6">
+        <header className="bg-surface border-b border-gray-200 dark:border-gray-700 px-4 py-3 lg:px-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <button
@@ -58,6 +62,13 @@ export function AppShell({ children }) {
               </div>
             </div>
             <div className="flex items-center space-x-4">
+              <button
+                onClick={toggleTheme}
+                className="p-2 rounded-md text-text-secondary hover:text-text-primary transition-colors"
+                title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+              >
+                {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+              </button>
               <button className="p-2 rounded-md text-text-secondary hover:text-text-primary">
                 <Settings className="h-5 w-5" />
               </button>
@@ -90,12 +101,12 @@ function SidebarContent({ location, onClose }) {
           </button>
         )}
       </div>
-      
+
       <nav className="flex-1 px-4 space-y-2">
         {navigation.map((item) => {
           const isActive = location.pathname === item.href
           const Icon = item.icon
-          
+
           return (
             <Link
               key={item.name}
@@ -103,8 +114,8 @@ function SidebarContent({ location, onClose }) {
               onClick={onClose}
               className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                 isActive
-                  ? 'bg-primary-100 text-primary-700'
-                  : 'text-text-secondary hover:text-text-primary hover:bg-gray-50'
+                  ? 'bg-primary-100 text-primary-700 dark:bg-primary-900 dark:text-primary-300'
+                  : 'text-text-secondary hover:text-text-primary hover:bg-gray-50 dark:hover:bg-gray-800'
               }`}
             >
               <Icon className="mr-3 h-5 w-5" />
@@ -113,8 +124,8 @@ function SidebarContent({ location, onClose }) {
           )
         })}
       </nav>
-      
-      <div className="p-4 border-t">
+
+      <div className="p-4 border-t border-gray-200 dark:border-gray-700">
         <div className="text-xs text-text-secondary">
           DevFlow AI Platform v1.0
         </div>
