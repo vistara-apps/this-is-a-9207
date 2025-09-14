@@ -9,6 +9,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -18,8 +20,8 @@ jobs:
       with:
         node-version: '22'
         cache: 'npm'
-        
-        - name: Install dependencies
+
+    - name: Install dependencies
       run: npm install
 
     - name: Build application
@@ -28,16 +30,16 @@ jobs:
         NODE_OPTIONS: --max-old-space-size=4096
         
     - name: Deploy to Vercel (Production)
-      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+      if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && env.VERCEL_TOKEN != ''
       uses: amondnet/vercel-action@v25
       with:
         vercel-token: ${{ secrets.VERCEL_TOKEN }}
         vercel-args: '--prod'
         vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
         vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-        
+
     - name: Deploy to Vercel (Preview)
-      if: github.ref != 'refs/heads/main' && github.ref != 'refs/heads/master'
+      if: github.ref != 'refs/heads/main' && github.ref != 'refs/heads/master' && env.VERCEL_TOKEN != ''
       uses: amondnet/vercel-action@v25
       with:
         vercel-token: ${{ secrets.VERCEL_TOKEN }}
