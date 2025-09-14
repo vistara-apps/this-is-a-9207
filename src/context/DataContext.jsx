@@ -83,6 +83,51 @@ const initialState = {
       commitDate: '2024-01-14',
       linkedTaskIds: ['1']
     }
+  ],
+  brainstormingSessions: [
+    {
+      sessionId: '1',
+      projectId: '1',
+      title: 'Q1 2024 Feature Planning',
+      description: 'Brainstorming session for upcoming quarter features',
+      status: 'active',
+      createdBy: '1',
+      createdAt: new Date().toISOString(),
+      participants: ['1'],
+      lastActivity: new Date().toISOString()
+    }
+  ],
+  brainstormingIdeas: [
+    {
+      ideaId: '1',
+      sessionId: '1',
+      content: 'Implement real-time collaborative editing',
+      authorId: '1',
+      authorName: 'John Doe',
+      createdAt: new Date().toISOString(),
+      votes: 5,
+      category: 'technical',
+      aiSuggestions: [
+        'Consider using Operational Transforms for conflict resolution',
+        'Implement presence indicators for active collaborators'
+      ],
+      status: 'active'
+    },
+    {
+      ideaId: '2',
+      sessionId: '1',
+      content: 'Add AI-powered code review suggestions',
+      authorId: '1',
+      authorName: 'John Doe',
+      createdAt: new Date().toISOString(),
+      votes: 3,
+      category: 'ai-features',
+      aiSuggestions: [
+        'Integrate with GitHub API for pull request analysis',
+        'Use machine learning models for code quality assessment'
+      ],
+      status: 'active'
+    }
   ]
 }
 
@@ -109,6 +154,45 @@ function dataReducer(state, action) {
       return {
         ...state,
         tasks: [...state.tasks, action.payload]
+      }
+    case 'ADD_BRAINSTORMING_SESSION':
+      return {
+        ...state,
+        brainstormingSessions: [...state.brainstormingSessions, action.payload]
+      }
+    case 'ADD_BRAINSTORMING_IDEA':
+      return {
+        ...state,
+        brainstormingIdeas: [...state.brainstormingIdeas, action.payload]
+      }
+    case 'UPDATE_BRAINSTORMING_IDEA':
+      return {
+        ...state,
+        brainstormingIdeas: state.brainstormingIdeas.map(idea =>
+          idea.ideaId === action.payload.ideaId ? { ...idea, ...action.payload } : idea
+        )
+      }
+    case 'VOTE_BRAINSTORMING_IDEA':
+      return {
+        ...state,
+        brainstormingIdeas: state.brainstormingIdeas.map(idea =>
+          idea.ideaId === action.payload.ideaId
+            ? { ...idea, votes: idea.votes + (action.payload.voteType === 'up' ? 1 : -1) }
+            : idea
+        )
+      }
+    case 'ADD_PARTICIPANT_TO_SESSION':
+      return {
+        ...state,
+        brainstormingSessions: state.brainstormingSessions.map(session =>
+          session.sessionId === action.payload.sessionId
+            ? {
+                ...session,
+                participants: [...new Set([...session.participants, action.payload.userId])],
+                lastActivity: new Date().toISOString()
+              }
+            : session
+        )
       }
     default:
       return state

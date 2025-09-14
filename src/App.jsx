@@ -6,6 +6,7 @@ import { FeatureValidator } from './pages/FeatureValidator'
 import { RoadmapPrioritizer } from './pages/RoadmapPrioritizer'
 import { CodeDocsHub } from './pages/CodeDocsHub'
 import { TaskAutomator } from './pages/TaskAutomator'
+import { Brainstorming } from './pages/Brainstorming'
 import { DataProvider } from './context/DataContext'
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
             <Route path="/roadmap" element={<RoadmapPrioritizer />} />
             <Route path="/code-docs" element={<CodeDocsHub />} />
             <Route path="/automation" element={<TaskAutomator />} />
+            <Route path="/brainstorming" element={<Brainstorming />} />
           </Routes>
         </AppShell>
       </div>

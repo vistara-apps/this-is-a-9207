@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Brain, Target, FileCode, Zap, TrendingUp, Users, Calendar, CheckCircle } from 'lucide-react'
+import { Brain, Target, FileCode, Zap, TrendingUp, Users, Calendar, CheckCircle, Lightbulb } from 'lucide-react'
 import { useData } from '../context/DataContext'
 
 export function Dashboard() {
@@ -65,6 +65,13 @@ export function Dashboard() {
       icon: Zap,
       href: '/automation',
       color: 'from-yellow-500 to-orange-500'
+    },
+    {
+      name: 'Collaborative Brainstorming',
+      description: 'Real-time collaborative brainstorming with AI suggestions to enhance team creativity.',
+      icon: Lightbulb,
+      href: '/brainstorming',
+      color: 'from-orange-500 to-red-500'
     }
   ]
 
