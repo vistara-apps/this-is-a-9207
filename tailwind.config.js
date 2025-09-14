@@ -22,19 +22,23 @@ export default {
           600: 'hsl(165, 70%, 40%)',
         },
         surface: {
+          DEFAULT: 'hsl(210, 40%, 98%)',
           light: 'hsl(210, 40%, 98%)',
           dark: 'hsl(210, 20%, 12%)',
         },
         background: {
+          DEFAULT: 'hsl(210, 40%, 95%)',
           light: 'hsl(210, 40%, 95%)',
           dark: 'hsl(210, 20%, 8%)',
         },
         text: {
           primary: {
+            DEFAULT: 'hsl(210, 50%, 15%)',
             light: 'hsl(210, 50%, 15%)',
             dark: 'hsl(210, 40%, 95%)',
           },
           secondary: {
+            DEFAULT: 'hsl(210, 40%, 35%)',
             light: 'hsl(210, 40%, 35%)',
             dark: 'hsl(210, 30%, 65%)',
           }
