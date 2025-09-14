@@ -4,6 +4,7 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
@@ -20,11 +21,23 @@ export default {
           500: 'hsl(165, 70%, 45%)',
           600: 'hsl(165, 70%, 40%)',
         },
-        surface: 'hsl(210, 40%, 98%)',
-        background: 'hsl(210, 40%, 95%)',
+        surface: {
+          light: 'hsl(210, 40%, 98%)',
+          dark: 'hsl(210, 20%, 12%)',
+        },
+        background: {
+          light: 'hsl(210, 40%, 95%)',
+          dark: 'hsl(210, 20%, 8%)',
+        },
         text: {
-          primary: 'hsl(210, 50%, 15%)',
-          secondary: 'hsl(210, 40%, 35%)',
+          primary: {
+            light: 'hsl(210, 50%, 15%)',
+            dark: 'hsl(210, 40%, 95%)',
+          },
+          secondary: {
+            light: 'hsl(210, 40%, 35%)',
+            dark: 'hsl(210, 30%, 65%)',
+          }
         }
       },
       borderRadius: {
